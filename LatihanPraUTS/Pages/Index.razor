@@ -1,0 +1,54 @@
+﻿@using LatihanPraUTS.Models
+@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<div class="row">
+   <table class="table-bordered">
+       <thead>
+           <tr>
+               <td>NIM</td>
+               <td>Nama</td>
+               <td>Prodi</td>
+               <td>Aksi</td>
+           </tr>
+       </thead>
+       <tbody>
+           @foreach(var mahasiswa in mahasiswaList)
+           {
+               <tr>
+                    <th>@mahasiswa.Nim</th>
+                    <th>@mahasiswa.Nama</th>
+                    <th>@mahasiswa.Prodi</th>
+                    <th>
+                        <button class="btn btn-primary" @onclick="(()=>hapus(mahasiswa))">Hapus</button>
+                    </th>
+                </tr>
+           }
+        </tbody>
+   </table>
+</div>
+
+@code{
+    //list hanya bisa di panggil di dalam fungsi method
+
+    public List<Mahasiswa> mahasiswaList = new List<Mahasiswa>();
+
+    protected override void OnInitialized()
+    {
+        TambahData();
+    }
+
+    private void TambahData()
+    {
+        mahasiswaList.Add(new Mahasiswa("02042111007", "Andriansyah", "Manajemen Informatika"));
+        mahasiswaList.Add(new Mahasiswa("02042111008", "Akbar", "Manajemen Informatika"));
+        mahasiswaList.Add(new Mahasiswa("02042111009", "Arya", "Manajemen Informatika"));
+    }
+
+    private void hapus(Mahasiswa mahasiswa)
+    {
+        var find = mahasiswaList.Single(x => x.Nim == mahasiswa.Nim);
+        mahasiswaList.Remove(find);
+    }
+}
